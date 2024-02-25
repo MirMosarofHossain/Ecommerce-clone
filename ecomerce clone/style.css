@@ -1,0 +1,243 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#container{
+    max-width: 100vw;
+}
+nav{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    background-color: rgb(46, 45, 45);
+    font-size: 1.2rem;
+    top: 0;
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    padding: 0 15px;
+}
+nav ul li{
+    margin-right: 20px;
+}
+nav ul li a{
+    text-decoration: none;
+    color: white;
+}
+nav>a{
+    text-decoration: none;
+    position: absolute;
+    right: 20px;
+}
+#logo{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#card-container{
+    width: 100%;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    background-color: black;
+    margin-top: 60px;
+padding-top: 5px;
+
+}
+
+.card{
+    border: 2px solid rgb(231, 204, 46);
+    width: 190px;
+    padding: 10px;
+    color: white;
+    background-color: #0d0c0c;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 0px 5px #daa520;
+    
+    
+}
+.img-ontainer{
+    height: 150px;
+    width: 100%;
+    /* border: 2px solid green; */
+}
+.img-ontainer img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.card >h4{
+    text-align: center;
+    margin-bottom: 10px;
+}
+.price-sec{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;  
+}
+.price-sec span{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.add-to-cart{
+    background-color: black;
+    color: white;
+    /* font-size: 0.9rem; */
+    padding: 3px 20px;
+    border: 1px solid white;
+    border-radius: 20px;  
+}
+.bottom-sec{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+.bottom-sec>span{
+    margin: 0px 20px;
+}
+
+
+/* list section */
+
+#list-container{
+    border: 0.8px solid rgb(128, 122, 122);
+    max-width: 98vw;
+    box-sizing: border-box;
+    padding: 15px 15px;
+    margin: 20px auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 5px #545452;
+    font-size: 1.2rem;
+}
+#list-sec{
+    width: 100%;
+    /* border: 2px solid black; */
+    box-sizing: border-box;
+    /* padding: 15px; */
+}
+
+#cut{
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    font-size: 1.5rem;
+    color: red;
+    cursor: pointer;
+}
+
+
+#total-sec{
+    width: 100%;
+    border: 2px solid black;
+    box-sizing: border-box;
+    margin-top:20px;
+}
+.row-head{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    /* border-bottom: 1px solid red; */
+}
+.row{
+    height: 150px;
+    width: 100%;
+    /* border: 1px solid green; */
+    display: flex;
+    /* border-bottom: 1px solid red; */
+    margin-top: 5px;
+}
+.col{
+    width: 16.5%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: 2px solid black;
+}
+.img-container{
+    width: 100%;
+    height: 100%;
+    border: 1px solid green;
+}
+.col >img{  
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.add{
+    height: 38px;
+    border: none;
+    background-color: green;
+    color: white;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.delete{   
+    height: 38px;
+    width: 70%;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 25px;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+.minus{
+    height: 35px;
+    width: 35px;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    background-color: red;
+    border: none;
+    cursor: pointer;
+}
+.plus{
+    height: 35px;
+    width: 35px;
+    margin-left: 30px;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border: none;
+    background-color: green;
+    cursor: pointer;
+}
+
+.row-bottom{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    /* border-bottom: 1px solid red;     */
+}
+.col-8{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+}
+.col-4{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+}
