@@ -7,17 +7,17 @@ const listSection = document.getElementById('list-container')
 const cut = document.getElementById('cut')
 listSection.style = 'display:none';
 
-logo.addEventListener('click',()=>{
+logo.addEventListener('click', () => {
 
-        listSection.style = 'display:block';
-        container.style = 'display:none'
-        logo.innerText='0'
-    
+    listSection.style = 'display:block';
+    container.style = 'display:none'
+    logo.innerText = '0'
+
 })
 
-cut.addEventListener('click',()=>{
+cut.addEventListener('click', () => {
     listSection.style = 'display:none';
-        container.style = 'display:block'
+    container.style = 'display:block'
 })
 
 
@@ -30,7 +30,7 @@ async function getData() {
 getData()
 
 const cardContainer = document.getElementById('card-container')
-
+let listOfAddToCart = [];
 function showData(result) {
     result.forEach(elm => {
         // console.log(elm);
@@ -71,23 +71,22 @@ function showData(result) {
         card.append(imgContainer, title, priceSec, bottomSec)
         cardContainer.append(card)
 
-/*add to cart btn function*/
+        /*add to cart btn function*/
         btn.addEventListener('click', () => {
-                // btn.style = "background-color:white;color:black;"
-                let noItems = Number(count.innerText);   
-                if(noItems==0){
-                    alert("First select number of items")
-                }  
-                else{         
+            // btn.style = "background-color:white;color:black;"
+            let noItems = Number(count.innerText);
+            if (noItems == 0) {
+                alert("First select number of items")
+            }
+            else {
                 let total = Number(logo.innerText);
                 let newTotal = total + noItems;
                 logo.innerText = `${newTotal}`
-                allTotal.innerText = `${Number(allTotal.innerText) + (noItems*elm.price)}`
+                allTotal.innerText = `${Number(allTotal.innerText) + (noItems * elm.price)}`
                 // console.log(noItems);
-                showAllItems(elm,noItems)
-
-                // showAllItems(elm,)
-                count.innerText='0';
+                let obj = { element: elm, noItems: noItems }
+                showAllItems(obj)
+                count.innerText = '0';
             }
         })
     });
@@ -108,87 +107,119 @@ function decrement(element) {
     }
 }
 
-const listSec = document.getElementById('list-sec');
 
-function showAllItems(element,noItems){
+function showAllItems(obj) {
+    console.log(listOfAddToCart);
+    let isExist = listOfAddToCart.find((elm) => elm.element.title == obj.element.title)
+    if (isExist) {
+        let indexOfExisting = listOfAddToCart.indexOf(isExist)
+        let oldNoOfItems = listOfAddToCart[indexOfExisting].noItems;
+        let newNoOfItems = oldNoOfItems + obj.noItems;
+        listOfAddToCart[indexOfExisting].noItems = newNoOfItems;        
+    }
+    else{
+        listOfAddToCart.push(obj)
+    }
+
+    const listSec = document.getElementById('list-sec');
+    console.log(listSec);
+
+
+    if (listSec) {
+        const removeElm = listSec.getElementsByClassName('row');
+        while (removeElm.length > 0) {
+            removeElm[0].parentNode.removeChild(removeElm[0]);
+        }
+    }
+    console.log(listOfAddToCart);
+
     // console.log(element);
     // console.log(noItems);
-    let row = document.createElement('div');
-    row.className='row'
-    let col1 = document.createElement('div');
-    col1.className = 'col'
-    let col2 = document.createElement('div');
-    col2.className = 'col'
-    let col3 = document.createElement('div');
-    col3.className = 'col'
-    let col4 = document.createElement('div');
-    col4.className = 'col'
-    let col5 = document.createElement('div');
-    col5.className = 'col'
-    let col6 = document.createElement('div');
-    col6.className = 'col'
+    listOfAddToCart.forEach((elm) => {
+        let row = document.createElement('div');
+        row.className = 'row'
+        let col1 = document.createElement('div');
+        col1.className = 'col'
+        let col2 = document.createElement('div');
+        col2.className = 'col'
+        let col3 = document.createElement('div');
+        col3.className = 'col'
+        let col4 = document.createElement('div');
+        col4.className = 'col'
+        let col5 = document.createElement('div');
+        col5.className = 'col'
+        let col6 = document.createElement('div');
+        col6.className = 'col'
 
 
+        let img = document.createElement('img')
+        let imageUrl = elm.element.images[0];
+        img.src = `${imageUrl}`;
+        col1.append(img)
 
-    let img = document.createElement('img')
-    let imageUrl = element.images[0];
-    img.src = `${imageUrl}`;
-    col1.append(img)
+        let productName = document.createElement('h3')
+        productName.innerText = `${elm.element.title}`
+        col2.append(productName)
 
-    let productName = document.createElement('h3')
-    productName.innerText = `${element.title}`
-    col2.append(productName)
+        let totalItems = document.createElement('p')
+        totalItems.innerText = `${elm.noItems}`
+        col3.append(totalItems)
 
-    let totalItems = document.createElement('p')
-    totalItems.innerText = `${noItems}`
-    col3.append(totalItems)
+        let price = document.createElement('p')
+        price.innerText = `${elm.element.price * elm.noItems}`
+        col4.append(price)
 
-    let price = document.createElement('p')
-    price.innerText = `${element.price*noItems}`
-    col4.append(price)
-
-    let minus = document.createElement('button')
-    minus.className='minus'
+        let minus = document.createElement('button')
+        minus.className = 'minus'
         minus.innerHTML = "<i class='fa-solid fa-minus'></i>"
         minus.addEventListener('click', () => {
-           let newNoItems = Number(totalItems.innerText) - 1;
-           if(newNoItems==0){
-            allTotal.innerText = `${Number(allTotal.innerText) - (1*element.price)}`
-              row.style = "display:none"
-           }
-           else{
-           totalItems.innerText = `${newNoItems}`
-           price.innerText = `${element.price*newNoItems}`
-           allTotal.innerText = `${Number(allTotal.innerText) - (1*element.price)}`
-        }
+            let newNoItems = Number(totalItems.innerText) - 1;
+            if (newNoItems == 0) {
+                allTotal.innerText = `${Number(allTotal.innerText) - (1 * elm.element.price)}`
+                row.style = "display:none"
+            }
+            else {
+                totalItems.innerText = `${newNoItems}`
+                price.innerText = `${elm.element.price * newNoItems}`
+                allTotal.innerText = `${Number(allTotal.innerText) - (1 * elm.element.price)}`
+            }
 
-         })
+        })
         let plus = document.createElement('button')
-        plus.className='plus'
+        plus.className = 'plus'
         plus.innerHTML = "<i class='fa-solid fa-plus'></i>"
-        plus.addEventListener('click', () => { 
-            let newNoItems = Number(totalItems.innerText) +1;  
-           totalItems.innerText = `${newNoItems}`
-           price.innerText = `${element.price*newNoItems}`
-           allTotal.innerText = `${Number(allTotal.innerText) + (1*element.price)}`
-         })
+        plus.addEventListener('click', () => {
+            let newNoItems = Number(totalItems.innerText) + 1;
+            totalItems.innerText = `${newNoItems}`
+            price.innerText = `${elm.element.price * newNoItems}`
+            allTotal.innerText = `${Number(allTotal.innerText) + (1 * elm.element.price)}`
+        })
 
-        col5.append(minus,plus)
+        col5.append(minus, plus)
 
-   let deleteBtn = document.createElement('button')
-   deleteBtn.innerText = 'Delete'
-   deleteBtn.className='delete'
+        let deleteBtn = document.createElement('button')
+        deleteBtn.innerText = 'Delete'
+        deleteBtn.className = 'delete'
 
-   deleteBtn.addEventListener('click', ()=>{
-    let want = confirm('do you want to remove this items')
-    if(want){
-        allTotal.innerText = `${Number(allTotal.innerText) - (Number(totalItems.innerText)*element.price)}`
-        row.style = "display:none"
-    }
-   })
+        deleteBtn.addEventListener('click', () => {
+            let want = confirm('do you want to remove this items')
+            if (want) {
+                allTotal.innerText = `${Number(allTotal.innerText) - (Number(totalItems.innerText) * elm.element.price)}`
+                // console.log(productName.innerText);
+               let deleteElm =  listOfAddToCart.find((e)=>e.element.title == productName.innerText)
+               let deleteIdx = listOfAddToCart.indexOf(deleteElm);
+               listOfAddToCart.splice(deleteIdx,1)
+            //    console.log(deleteIdx);
+                row.parentNode.removeChild(row);
+            }
+        })
 
 
-   col6.append(deleteBtn)
-    row.append(col1,col2,col3,col4,col5,col6)
-    listSec.append(row)
+        col6.append(deleteBtn)
+        row.append(col1, col2, col3, col4, col5, col6)
+        listSec.append(row)
+    })
+
 }
+
+
